@@ -16,11 +16,11 @@ During exploratory testing, the application was evaluated under various real-wor
 # Most Critical Bug
 
 ## Title
-Application crashes when launched without internet connection
+Application crashes on launch when no internet connection is available
 
 ## Severity
 
-Critical (Crash / Blocking)
+Critical – Crash on startup (blocking usage)
 
 ## Environment
 
@@ -51,7 +51,8 @@ Preconditions: Application was not installed yet or is fully closed.
     * That the issue is related to network connectivity.
 
 * Ideally a retry mechanism should be available (button try again or pull-to-refresh).
-* Optionally, previously cached results should be shown if available with a note indicating that the data may be outdated.
+* Optionally, previously cached results should be shown if available with a note indicating 
+* that the data may be outdated.
 
 ## Other issues (Ordered by Severity):
 
@@ -60,7 +61,7 @@ Preconditions: Application was not installed yet or is fully closed.
 * Expected: Application should refresh data when returning to foreground or provide a manual refresh mechanism(button or pull-to-refresh).)
 
 * 2.Layout Issues on Small Screens 
-* On small screen devices, number rows appear compressed and spacing is tight. Potential overflow risk exists.
+* On small screen devices, number rows appear compressed and spacing becomes tight, increasing the risk of content clipping.
 * Expected: Adaptive layout behavior. Consider horizontal scrolling or dynamic spacing.
 
 * 3.Accessibility – Number Circles Lack Semantic Context
@@ -68,7 +69,7 @@ Preconditions: Application was not installed yet or is fully closed.
   Red color is the only visual distinction for super numbers.
 * Expected: Clearly structure numbers for screen readers. For example with Semantics.
 
-* 4.EuroJackpot Super Numbers Not Visually Distinguished
+* 4.In EuroJackpot, special numbers are not visually differentiated from regular numbers.
 * In 6aus49, super numbers are displayed in red circles. In EuroJackpot, super numbers are rendered the same as regular numbers (dark gray).
 * Expected: Consistent visual distinction.
 
@@ -76,7 +77,7 @@ Preconditions: Application was not installed yet or is fully closed.
 * Some strings (e.g., "Last Draw", "Next Draw") appear hardcoded in English.
 * Expected: All user-facing strings should use string resources
 
-* 6.No scroll bar in portrait mode
+* 6.In portrait mode, no visible scroll indicator is shown. While scrolling is functional, discoverability of additional content may be reduced.
 * When the device is in portrait mode, there is no visible scroll bar on the right side
 * Expected: A visible scroll bar should be present to indicate scrollability.
 

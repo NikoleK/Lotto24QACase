@@ -90,7 +90,7 @@ Please provide your test code, bug report, and UI/UX feedback in separate, clear
 
 ---
 
-## Task 1 UI Tests
+## Task 1 – UI Tests
 
 UI tests are implemented using the Jetpack Compose testing framework and verify:
 
@@ -99,21 +99,27 @@ UI tests are implemented using the Jetpack Compose testing framework and verify:
 - Correct semantics for the super number
 - Correct rendering order of numbers
 
-* The test setup follows a scalable structure:
+### Test Structure
 
-- BaseComposeUITest for shared configuration
-- Page Object pattern for UI abstraction
-- Helper extensions (e.g. assertCircleKind)
-- testTag and custom semantics for improved testability
+The test setup follows a scalable structure:
 
-* Running Tests
+- `BaseComposeUITest`
+- Page Object pattern
+- Helper extensions (e.g. `assertCircleKind`)
+- `testTag` and custom semantics for improved testability
 
-./gradlew connectedAndroidTest
-or directly from Android Studio.
+Main test file:  
+[app/src/androidTest/java/com/lotto24/qacase/ui/LottoResultItemTest.kt](app/src/androidTest/java/com/lotto24/qacase/ui/LottoResultItemTest.kt)
 
-## Task 2, 3: QA & UI/UX Reports
+### Running Tests
 
-Additional analysis and findings can be found in:
+`./gradlew connectedAndroidTest` or directly from Android Studio.
 
-/reports/GENERAL_QA_AND_BUG.md
-/reports/UI_UX_Review.md
+---
+
+## Task 2 & 3 – QA & UI/UX Reports
+
+Additional analysis and findings:
+
+- [GENERAL_QA_AND_BUG.md](reports/GENERAL_QA_AND_BUG.md)
+- [UI_UX_REVIEW.md](reports/UI_UX_REVIEW.md)
