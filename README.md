@@ -87,3 +87,33 @@ Please review the application from a user's perspective and provide feedback on 
 
 **Note**
 Please provide your test code, bug report, and UI/UX feedback in separate, clearly-labeled documents on the forked GitHub repository version from this repository. Good luck!
+
+---
+
+## Task 1 UI Tests
+
+UI tests are implemented using the Jetpack Compose testing framework and verify:
+
+- Correct rendering of lottery name and formatted dates
+- Correct number of regular and super number circles (6 + 1 for 6aus49)
+- Correct semantics for the super number
+- Correct rendering order of numbers
+
+* The test setup follows a scalable structure:
+
+- BaseComposeUITest for shared configuration
+- Page Object pattern for UI abstraction
+- Helper extensions (e.g. assertCircleKind)
+- testTag and custom semantics for improved testability
+
+* Running Tests
+
+./gradlew connectedAndroidTest
+or directly from Android Studio.
+
+## Task 2, 3: QA & UI/UX Reports
+
+Additional analysis and findings can be found in:
+
+/reports/GENERAL_QA_AND_BUG.md
+/reports/UI_UX_Review.md

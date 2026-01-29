@@ -1,4 +1,5 @@
 package com.lotto24.qacase.ui
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -16,11 +17,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
+import com.lotto24.qacase.ui.semantics.circleKind
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.lotto24.qacase.domain.model.LottoDomain
+import com.lotto24.qacase.ui.semantics.CircleKind
 import com.lotto24.qacase.ui.theme.LottoViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -47,7 +52,9 @@ fun LottoScreen(
 @Composable
 fun LottoResultItem(lotto: LottoDomain) {
     Card(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .testTag("lotto_result_card_${lotto.lottery.lowercase()}"),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White)
     ) {
@@ -59,7 +66,8 @@ fun LottoResultItem(lotto: LottoDomain) {
                 text = lotto.lottery.uppercase(),
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.Bold,
-                color = Color.Gray
+                color = Color.Gray,
+                modifier = Modifier.testTag("lotto_name_${lotto.lottery.lowercase()}")
             )
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -67,7 +75,8 @@ fun LottoResultItem(lotto: LottoDomain) {
             Text(
                 text = "Last Draw: ${DateFormatter.format(lotto.lastDrawDate)}",
                 style = MaterialTheme.typography.bodyLarge,
-                fontWeight = FontWeight.SemiBold
+                fontWeight = FontWeight.SemiBold,
+                modifier = Modifier.testTag("last_draw_date_${lotto.lottery.lowercase()}")
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -75,20 +84,30 @@ fun LottoResultItem(lotto: LottoDomain) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 8.dp),
+                    .padding(vertical = 8.dp)
+                    .testTag("numbers_row_${lotto.lottery.lowercase()}"),
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                lotto.numbers.forEach { number ->
-                    NumberCircle(number = number.toString())
+                lotto.numbers.forEachIndexed { index, number ->
+                    NumberCircle(
+                        number = number.toString(),
+                        testTag = "regular_number_${lotto.lottery.lowercase()}_$index"
+                    )
                     Spacer(modifier = Modifier.width(8.dp))
                 }
 
-                lotto.superNumber.forEach { number ->
+                lotto.superNumber.forEachIndexed { index, number ->
                     if (lotto.isEuroJackpot) {
-                        NumberCircle(number = number.toString())
+                        NumberCircle(
+                            number = number.toString(),
+                            testTag = "super_number_${lotto.lottery.lowercase()}_$index"
+                        )
                     } else {
-                        SuperNumberCircle(number = number.toString())
+                        SuperNumberCircle(
+                            number = number.toString(),
+                            testTag = "super_number_${lotto.lottery.lowercase()}_$index"
+                        )
                     }
                     Spacer(modifier = Modifier.width(8.dp))
                 }
@@ -98,23 +117,28 @@ fun LottoResultItem(lotto: LottoDomain) {
             Text(
                 text = "Next Draw: ${DateFormatter.format(lotto.nextDrawDate)}",
                 style = MaterialTheme.typography.bodyLarge,
-                modifier = Modifier.align(Alignment.End)
+                modifier = Modifier
+                    .align(Alignment.End)
+                    .testTag("next_draw_date_${lotto.lottery.lowercase()}")
             )
         }
     }
 }
 
 @Composable
-fun NumberCircle(number: String) {
+fun NumberCircle(number: String, testTag: String = "number_circle") {
     Box(
         modifier = Modifier
             .size(40.dp)
             .clip(CircleShape)
-            .background(Color.DarkGray),
+            .background(Color.DarkGray)
+            .semantics { circleKind = CircleKind.REGULAR }
+            .testTag(testTag),
         contentAlignment = Alignment.Center
     ) {
         Text(
             text = number,
+            modifier = Modifier.testTag("${testTag}_text"),
             color = MaterialTheme.colorScheme.onPrimary,
             fontSize = 16.sp,
             fontWeight = FontWeight.Bold
@@ -123,16 +147,19 @@ fun NumberCircle(number: String) {
 }
 
 @Composable
-fun SuperNumberCircle(number: String) {
+fun SuperNumberCircle(number: String, testTag: String = "super_number_circle") {
     Box(
         modifier = Modifier
             .size(40.dp)
             .clip(CircleShape)
-            .background(Color.Red),
+            .background(Color.Red)
+            .semantics { circleKind = CircleKind.SUPER }
+            .testTag(testTag),
         contentAlignment = Alignment.Center
     ) {
         Text(
             text = number,
+            modifier = Modifier.testTag("${testTag}_text"),
             color = MaterialTheme.colorScheme.onTertiary,
             fontSize = 16.sp,
             fontWeight = FontWeight.Bold
